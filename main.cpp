@@ -1,34 +1,30 @@
 #include <igl/opengl/glfw/Viewer.h>
+#include <igl/opengl/glfw/imgui/ImGuiMenu.h>
+#include <igl/opengl/glfw/imgui/ImGuiHelpers.h>
+#include <igl/opengl/glfw/imgui/ImGuiTraits.h>
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
-  // Inline mesh of a cube
-  const Eigen::MatrixXd V= (Eigen::MatrixXd(8,3)<<
-    0.0,0.0,0.0,
-    0.0,0.0,1.0,
-    0.0,1.0,0.0,
-    0.0,1.0,1.0,
-    1.0,0.0,0.0,
-    1.0,0.0,1.0,
-    1.0,1.0,0.0,
-    1.0,1.0,1.0).finished();
-  const Eigen::MatrixXi F = (Eigen::MatrixXi(12,3)<<
-    1,7,5,
-    1,3,7,
-    1,4,3,
-    1,2,4,
-    3,8,7,
-    3,4,8,
-    5,7,8,
-    5,8,6,
-    1,5,6,
-    1,6,2,
-    2,6,8,
-    2,8,4).finished().array()-1;
+  Eigen::MatrixXd V;
+  Eigen::MatrixXi F;
 
-  // Plot the mesh
+  // Load a mesh in OBJ format
+  igl::readOBJ(argv[1], V, F);
+
+  // Attach a menu plugin
+  igl::opengl::glfw::imgui::ImGuiMenu menu;
   igl::opengl::glfw::Viewer viewer;
+
+  // Compute the optimal core position of the Jaap's sphere
+  viewer.plugins.push_back(&menu);
+  // Add content to the default menu window
+  menu.callback_draw_viewer_menu = [&]()
+  {
+      // Draw parent menu content
+      menu.draw_viewer_menu();
+  };
+  // Plot the mesh
   viewer.data().set_mesh(V, F);
-  viewer.data().set_face_based(true);
   viewer.launch();
 }
