@@ -3,7 +3,7 @@
 #include <igl/opengl/glfw/imgui/ImGuiHelpers.h>
 #include <igl/opengl/glfw/imgui/ImGuiTraits.h>
 #include <iostream>
-#include "Utils.h"
+#include "utils/Utils.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
   // Compute the optimal core position of the Jaap's sphere
   //TODO: add implementation
-  const RowVector3 &matrix = Utils::calculateCenterOfMass(V, F);
+  const RowVector3 &matrix = Utils::calculateCenterOfMassInside(V, F);
 
   std::cout << "This is x:" << matrix[0] << std::endl;
   std::cout << "This is y:" << matrix[1] << std::endl;

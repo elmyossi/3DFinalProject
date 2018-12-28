@@ -4,6 +4,24 @@
 
 #include "Utils.h"
 
+RowVector3 Utils::calculateCenterOfMassInside(Eigen::MatrixXd V, Eigen::MatrixXi F) {
+    RowVector3 mg = RowVector3(0,0,0);
+    RowVector3 O = RowVector3(0,0,0);
+    double m =  0;
+    for (int i = 0; i < F.rows(); i++)
+    {
+        RowVector3 v1 = V.row(F(i,0));
+        RowVector3 v2 = V.row(F(i,1));
+        RowVector3 v3 = V.row(F(i,2));
+        double volume = Utils::SignedVolume(O, v1, v2, v3);
+        m += volume;
+        mg = mg + (volume * Utils::Centroid(O, v1, v2, v3));
+    }
+    return mg * 1.0/m;
+}
+
+
+
 RowVector3 Utils::calculateCenterOfMass(Eigen::MatrixXd V, Eigen::MatrixXi F) {
     RowVector3 massCenter = RowVector3(0, 0, 0);
     RowVector3 triangleCenter;
@@ -27,6 +45,22 @@ RowVector3 Utils::calculateCenterOfMass(Eigen::MatrixXd V, Eigen::MatrixXi F) {
     massCenter[2] /= mass;
     return massCenter;
 
+}
+
+
+RowVector3 Utils::Centroid(RowVector3 p1, RowVector3 p2, RowVector3 p3, RowVector3 p4)
+{
+    return 0.25*(p1+p2+p3+p4);
+}
+
+double Utils::SignedVolume(RowVector3 p1, RowVector3 p2, RowVector3 p3, RowVector3 p4)
+{
+    RowVector3 newP1 = RowVector3(p2[0]-p1[0], p2[1]-p1[1], p2[2]-p1[2]);
+    RowVector3 newP2 = RowVector3(p3[0]-p1[0], p3[1]-p1[1], p3[2]-p1[2]);
+    RowVector3 newP3 = RowVector3(p4[0]-p1[0], p4[1]-p1[1], p4[2]-p1[2]);
+    RowVector3 cross = newP2.cross(newP3);
+    double dot = newP1.dot(cross);
+    return 1.0/6 * dot;
 }
 
 
