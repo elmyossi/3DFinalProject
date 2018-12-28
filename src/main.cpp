@@ -4,6 +4,8 @@
 #include <igl/opengl/glfw/imgui/ImGuiTraits.h>
 #include <iostream>
 #include "utils/Utils.h"
+#include "../inc/slicing_plugin.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +16,6 @@ int main(int argc, char *argv[])
   igl::readOBJ(argv[1], V, F);
 
   // Attach a menu plugin
-  igl::opengl::glfw::imgui::ImGuiMenu menu;
   igl::opengl::glfw::Viewer viewer;
 
   // Compute the optimal core position of the Jaap's sphere
@@ -26,14 +27,16 @@ int main(int argc, char *argv[])
   std::cout << "This is z:" << matrix[2] << std::endl;
 
 
-  viewer.plugins.push_back(&menu);
-  // Add content to the default menu window
-  menu.callback_draw_viewer_menu = [&]()
-  {
-      // Draw parent menu content
-      menu.draw_viewer_menu();
-  };
-  // Plot the mesh
+  RowVector3 core = RowVector3(-0.0208036, 0.0858753, 0.010965);
+
   viewer.data().set_mesh(V, F);
+  viewer.data().point_size = 100;
+  viewer.data().add_points(core, RowVector3(0,0,0));
+
+  viewer.data().add_label(core, "THIS IS THE CORE");
+
+  SlicingPlugin menu;
+  viewer.plugins.push_back(&menu);
+  // Plot the mesh
   viewer.launch();
 }
