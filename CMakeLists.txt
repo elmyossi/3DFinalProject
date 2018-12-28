@@ -12,5 +12,5 @@ find_package(LIBIGL REQUIRED QUIET)
 
 # Add your project files
 file(GLOB SRCFILES *.cpp)
-add_executable(${PROJECT_NAME}_bin ${SRCFILES} Utils.cpp Utils.h)
+add_executable(${PROJECT_NAME}_bin ${SRCFILES} src/main.cpp src/utils/Utils.cpp src/utils/Utils.h src/find_core/SimulatedAnnealingManager.cpp src/find_core/SimulatedAnnealingManager.h)
 target_link_libraries(${PROJECT_NAME}_bin igl::core igl::opengl_glfw igl::opengl_glfw_imgui)
