@@ -10,27 +10,33 @@
 #include <sstream>
 
 
-static const char *const innerPointsFilePath = "../points.txt";
+static const char *const innerPointsFilePath = "../points_cube.txt";
+static const char *const objFilePath = "/home/michaelo/Downloads/cube.obj";
+
+static int pointsDisplaySize = 10;
 using namespace std;
 string line;
 
-bool DisplayInnerPoints = true;
+bool DisplayInnerPoints = false;
 
 int main(int argc, char *argv[]) {
 
+    std::ifstream inFile(innerPointsFilePath);
+    long numberOfRows = std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
+
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;
-    Eigen::MatrixXd meshInnerPoints(2600, 3);
+    Eigen::MatrixXd meshInnerPoints((numberOfRows), 3);
 
     // Load a mesh in OBJ format
-    igl::readOBJ(argv[1], V, F);
+    igl::readOBJ(objFilePath, V, F);
 
     // Attach a menu plugin
     igl::opengl::glfw::Viewer viewer;
 
     ifstream meshInnerPointsFile;
     meshInnerPointsFile.open(innerPointsFilePath);
-    int numberOfRows = 0;
+    int currentRow = 0;
 
     while (getline(meshInnerPointsFile, line)) {
         string lineWithoutBraces = line.substr(1, line.size() - 2);
@@ -41,14 +47,15 @@ int main(int argc, char *argv[]) {
             ssin >> arr[i];
             ++i;
         }
-        meshInnerPoints.row(numberOfRows)[0] = stof(arr[0]);
-        meshInnerPoints.row(numberOfRows)[1] = stof(arr[1]);
-        meshInnerPoints.row(numberOfRows)[2] = stof(arr[2]);
-        numberOfRows++;
+        meshInnerPoints.row(currentRow)[0] = stof(arr[0]);
+        meshInnerPoints.row(currentRow)[1] = stof(arr[1]);
+        meshInnerPoints.row(currentRow)[2] = stof(arr[2]);
+        currentRow++;
     }
 
+    double radiusSize;
     // Compute the optimal core position of the Jaap's sphere
-    const RowVector3 &matrix = jaapSphere::calculateCenterOfSphere(V, meshInnerPoints,numberOfRows);
+    const RowVector3 &matrix = jaapSphere::calculateCenterOfSphere(V, meshInnerPoints,numberOfRows,radiusSize);
 
     std::cout << "This is x:" << matrix[0] << std::endl;
     std::cout << "This is y:" << matrix[1] << std::endl;
@@ -57,7 +64,7 @@ int main(int argc, char *argv[]) {
     RowVector3 core = RowVector3(matrix[0], matrix[1], matrix[2]);
 
     viewer.data().set_mesh(V, F);
-    viewer.data().point_size = 5;
+    viewer.data().point_size = pointsDisplaySize;
     viewer.data().add_points(core, RowVector3(0, 0, 0));
     if(DisplayInnerPoints){
         for(int i=0;i<numberOfRows;i++){
