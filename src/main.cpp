@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     // Compute the optimal core position of the Jaap's sphere
     //TODO: add implementation
-    const RowVector3 &matrix = Utils::calculateCenterOfMassInside(V, F);
+    const RowVector3 &matrix = japSphere::calculateCenterOfSphere(V, meshInnerPoints,numberOfRows);
 
     std::cout << "This is x:" << matrix[0] << std::endl;
     std::cout << "This is y:" << matrix[1] << std::endl;
