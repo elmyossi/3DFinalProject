@@ -3,6 +3,7 @@
 #include <igl/opengl/glfw/imgui/ImGuiHelpers.h>
 #include <igl/opengl/glfw/imgui/ImGuiTraits.h>
 #include <iostream>
+//#include <igl/read_triangle_mesh.h>
 #include "utils/Utils.h"
 #include "../inc/slicing_plugin.h"
 
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
   Eigen::MatrixXi F;
 
   // Load a mesh in OBJ format
+  //igl::read_triangle_mesh(argv[1]), V, F);
   igl::readOBJ(argv[1], V, F);
 
   // Attach a menu plugin
@@ -27,7 +29,7 @@ int main(int argc, char *argv[])
   std::cout << "This is z:" << matrix[2] << std::endl;
 
 
-  RowVector3 core = RowVector3(-0.0208036, 0.0858753, 0.010965);
+  RowVector3 core = RowVector3(0.0053794002160429955, 0.11838571727275848, 0.0029480599332600832);
 
   viewer.data().set_mesh(V, F);
   viewer.data().point_size = 100;
