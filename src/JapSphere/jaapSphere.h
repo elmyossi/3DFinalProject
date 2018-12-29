@@ -11,7 +11,7 @@
 class jaapSphere {
 
 public:
-    static RowVector3 calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS, int numberOfRowsInner);
+    static RowVector3 calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS, long numberOfRowsInner,double& radiusSize);
 
 private:
     static double getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p);
