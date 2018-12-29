@@ -25,7 +25,7 @@ double jaapSphere::calcDistance(RowVector3 q, RowVector3 p) {
 }
 
 RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS,
-                                              int numberOfRowsInner) {
+                                              long numberOfRowsInner,double& radiusSize) {
     RowVector3 argMax = meshPointsInnerS.row(0);
     double maxVal = getMinOutOfMesh(meshPointsS, argMax);
     double temp;
@@ -37,5 +37,6 @@ RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eige
             maxVal = temp;
         }
     }
+    radiusSize = maxVal;
     return argMax;
 }
