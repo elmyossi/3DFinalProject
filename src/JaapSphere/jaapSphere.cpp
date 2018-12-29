@@ -4,6 +4,8 @@
 
 #include "jaapSphere.h"
 
+RowVector3 jaapSphere::jaapSphereCore = RowVector3(0,0,0);
+double jaapSphere::jaapSphereRadius = 0;
 
 double jaapSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
     RowVector3 argMin = meshPointsS.row(0);
@@ -37,6 +39,9 @@ RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eige
             maxVal = temp;
         }
     }
-    radiusSize = maxVal;
+    jaapSphere::jaapSphereRadius = maxVal;
+    jaapSphere::jaapSphereCore = argMax;
     return argMax;
 }
+
+
