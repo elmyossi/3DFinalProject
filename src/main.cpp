@@ -2,6 +2,7 @@
 #include <igl/opengl/glfw/imgui/ImGuiMenu.h>
 #include <igl/opengl/glfw/imgui/ImGuiHelpers.h>
 #include <igl/opengl/glfw/imgui/ImGuiTraits.h>
+#include <igl/decimate.h>
 #include <iostream>
 #include "utils/Utils.h"
 #include "../inc/slicing_plugin.h"
@@ -10,8 +11,8 @@
 #include <sstream>
 
 
-static const char *const innerPointsFilePath = "../points_cube.txt";
-static const char *const objFilePath = "/home/michaelo/Downloads/cube.obj";
+static const char *const innerPointsFilePath = "../points_bunny2.txt";
+static const char *const objFilePath = "<path_to_project>" + "/goodBunny.obj";
 
 static int pointsDisplaySize = 10;
 using namespace std;
@@ -60,18 +61,22 @@ int main(int argc, char *argv[]) {
     std::cout << "This is x:" << matrix[0] << std::endl;
     std::cout << "This is y:" << matrix[1] << std::endl;
     std::cout << "This is z:" << matrix[2] << std::endl;
-    
+
+    RowVector3 cm = Utils::calculateCenterOfMassInside(V, F);
+
     RowVector3 core = RowVector3(matrix[0], matrix[1], matrix[2]);
 
     viewer.data().set_mesh(V, F);
     viewer.data().point_size = pointsDisplaySize;
     viewer.data().add_points(core, RowVector3(0, 0, 0));
+    viewer.data().add_points(cm, RowVector3(0, 0, 0));
     if(DisplayInnerPoints){
         for(int i=0;i<numberOfRows;i++){
             viewer.data().add_points(meshInnerPoints.row(i), RowVector3(0, 0, 0));
         }
     }
     viewer.data().add_label(core, "THIS IS THE CORE");
+    viewer.data().add_label(cm, "THIS IS THE Center Mass");
 
     SlicingPlugin menu;
     viewer.plugins.push_back(&menu);
