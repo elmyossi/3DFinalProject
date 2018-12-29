@@ -14,6 +14,8 @@ static const char *const innerPointsFilePath = "../points.txt";
 using namespace std;
 string line;
 
+bool DisplayInnerPoints = true;
+
 int main(int argc, char *argv[]) {
 
     Eigen::MatrixXd V;
@@ -55,9 +57,13 @@ int main(int argc, char *argv[]) {
     RowVector3 core = RowVector3(matrix[0], matrix[1], matrix[2]);
 
     viewer.data().set_mesh(V, F);
-    viewer.data().point_size = 100;
+    viewer.data().point_size = 5;
     viewer.data().add_points(core, RowVector3(0, 0, 0));
-
+    if(DisplayInnerPoints){
+        for(int i=0;i<numberOfRows;i++){
+            viewer.data().add_points(meshInnerPoints.row(i), RowVector3(0, 0, 0));
+        }
+    }
     viewer.data().add_label(core, "THIS IS THE CORE");
 
     SlicingPlugin menu;
