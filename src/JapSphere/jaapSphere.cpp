@@ -2,10 +2,10 @@
 // Created by michaelo on 12/28/18.
 //
 
-#include "japSphere.h"
+#include "jaapSphere.h"
 
 
-double japSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
+double jaapSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
     RowVector3 argMin = meshPointsS.row(0);
     double minVal = calcDistance(argMin, p);
     double temp;
@@ -20,11 +20,11 @@ double japSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
     return minVal;
 }
 
-double japSphere::calcDistance(RowVector3 q, RowVector3 p) {
+double jaapSphere::calcDistance(RowVector3 q, RowVector3 p) {
     return sqrt(pow((q[0] - p[0]), 2) + pow((q[1] - p[1]), 2) + pow((q[2] - p[2]), 2));
 }
 
-RowVector3 japSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS,
+RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS,
                                               int numberOfRowsInner) {
     RowVector3 argMax = meshPointsInnerS.row(0);
     double maxVal = getMinOutOfMesh(meshPointsS, argMax);

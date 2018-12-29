@@ -37,7 +37,7 @@ add_executable(${PROJECT_NAME}_bin
         inc/slicing_plugin.h
         imguizmo/ImGuizmo.cpp
         imguizmo/ImGuizmo.h
-        src/JapSphere/japSphere.cpp
-        src/JapSphere/japSphere.h)
+        src/JapSphere/jaapSphere.cpp
+        src/JapSphere/jaapSphere.h)
 
 target_link_libraries(${PROJECT_NAME}_bin igl::core igl::opengl_glfw igl::opengl_glfw_imgui)

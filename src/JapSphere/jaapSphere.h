@@ -8,7 +8,7 @@
 #include "../utils/Utils.h"
 #include <cmath>
 
-class japSphere {
+class jaapSphere {
 
 public:
     static RowVector3 calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS, int numberOfRowsInner);

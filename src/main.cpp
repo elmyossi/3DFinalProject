@@ -5,7 +5,7 @@
 #include <iostream>
 #include "utils/Utils.h"
 #include "../inc/slicing_plugin.h"
-#include "JapSphere/japSphere.h"
+#include "JapSphere/jaapSphere.h"
 #include <fstream>
 #include <sstream>
 
@@ -45,18 +45,14 @@ int main(int argc, char *argv[]) {
         numberOfRows++;
     }
 
-    RowVector3 japCenter = japSphere::calculateCenterOfSphere(V, meshInnerPoints, numberOfRows);
-
     // Compute the optimal core position of the Jaap's sphere
-    //TODO: add implementation
-    const RowVector3 &matrix = japSphere::calculateCenterOfSphere(V, meshInnerPoints,numberOfRows);
+    const RowVector3 &matrix = jaapSphere::calculateCenterOfSphere(V, meshInnerPoints,numberOfRows);
 
     std::cout << "This is x:" << matrix[0] << std::endl;
     std::cout << "This is y:" << matrix[1] << std::endl;
     std::cout << "This is z:" << matrix[2] << std::endl;
-
-
-    RowVector3 core = RowVector3(-0.0208036, 0.0858753, 0.010965);
+    
+    RowVector3 core = RowVector3(matrix[0], matrix[1], matrix[2]);
 
     viewer.data().set_mesh(V, F);
     viewer.data().point_size = 100;
