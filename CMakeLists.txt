@@ -39,8 +39,8 @@ add_executable(${PROJECT_NAME}_bin
         imguizmo/ImGuizmo.h
         src/JaapSphere/jaapSphere.cpp
         src/JaapSphere/jaapSphere.h
-        src/rotationAxis/rotationAxis.cpp
-        src/rotationAxis/rotationAxis.h
+        src/rotationAxis/RotationAxis.cpp
+        src/rotationAxis/RotationAxis.h
         )
 
 target_link_libraries(${PROJECT_NAME}_bin igl::core igl::opengl_glfw igl::opengl_glfw_imgui)

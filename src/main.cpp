@@ -12,7 +12,7 @@
 
 
 static const char *const innerPointsFilePath = "../points_bunny2.txt";
-static const char *const objFilePath = "<path_to_project>" + "/goodBunny.obj";
+static const char *const objFilePath = "../goodBunny.obj";
 
 static int pointsDisplaySize = 10;
 using namespace std;
@@ -80,6 +80,8 @@ int main(int argc, char *argv[]) {
     viewer.data().add_label(core, "THIS IS THE CORE");
     viewer.data().add_label(cm, "THIS IS THE Center Mass");
     viewer.data().add_label(zero, "THIS IS Zero");
+    double jaapSphereRadius = jaapSphere::jaapSphereRadius;
+    std::cout << "This is the radius:" << jaapSphereRadius << std::endl;
 
     SlicingPlugin menu;
     viewer.plugins.push_back(&menu);
