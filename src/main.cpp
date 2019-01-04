@@ -6,7 +6,7 @@
 #include <iostream>
 #include "utils/Utils.h"
 #include "../inc/slicing_plugin.h"
-#include "JapSphere/jaapSphere.h"
+#include "JaapSphere/jaapSphere.h"
 #include <fstream>
 #include <sstream>
 
@@ -63,6 +63,7 @@ int main(int argc, char *argv[]) {
     std::cout << "This is z:" << matrix[2] << std::endl;
 
     RowVector3 cm = Utils::calculateCenterOfMassInside(V, F);
+    RowVector3 zero = RowVector3(0,0,0);
 
     RowVector3 core = RowVector3(matrix[0], matrix[1], matrix[2]);
 
@@ -70,6 +71,7 @@ int main(int argc, char *argv[]) {
     viewer.data().point_size = pointsDisplaySize;
     viewer.data().add_points(core, RowVector3(0, 0, 0));
     viewer.data().add_points(cm, RowVector3(0, 0, 0));
+    viewer.data().add_points(zero, RowVector3(0, 0, 0));
     if(DisplayInnerPoints){
         for(int i=0;i<numberOfRows;i++){
             viewer.data().add_points(meshInnerPoints.row(i), RowVector3(0, 0, 0));
@@ -77,6 +79,7 @@ int main(int argc, char *argv[]) {
     }
     viewer.data().add_label(core, "THIS IS THE CORE");
     viewer.data().add_label(cm, "THIS IS THE Center Mass");
+    viewer.data().add_label(zero, "THIS IS Zero");
 
     SlicingPlugin menu;
     viewer.plugins.push_back(&menu);

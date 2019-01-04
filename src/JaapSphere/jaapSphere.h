@@ -10,6 +10,11 @@
 
 class jaapSphere {
 
+
+public:
+    static RowVector3 jaapSphereCore;
+    static double jaapSphereRadius;
+
 public:
     static RowVector3 calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS, long numberOfRowsInner,double& radiusSize);
 
