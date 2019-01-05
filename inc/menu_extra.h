@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef INC_3DFINALPROJECRT_MENU_EXTRA_H
+#define INC_3DFINALPROJECRT_MENU_EXTRA_H
+
 ////////////////////////////////////////////////////////////////////////////////
 #include "../imguizmo/ImGuizmo.h"
 #include <imgui/imgui.h>
@@ -202,3 +206,6 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 }
 
 } // namespace ImGuizmo
+
+#endif //INC_3DFINALPROJECRT_MENU_EXTRA_H
+
