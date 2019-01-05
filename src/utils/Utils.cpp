@@ -14,6 +14,7 @@
 #include <fstream>
 #include <sstream>
 
+
 RowVector3 Utils::calculateCenterOfMassInside(Eigen::MatrixXd V, Eigen::MatrixXi F) {
     RowVector3 mg = RowVector3(0, 0, 0);
     RowVector3 O = RowVector3(0, 0, 0);
@@ -81,4 +82,26 @@ void Utils::displayGUI(igl::opengl::glfw::Viewer viewer, Eigen::MatrixXd V, Eige
     viewer.plugins.push_back(&menu);
     // Plot the mesh
     viewer.launch();
+}
+
+RowVector3 Utils::transformToCylindricalCoordinates(RowVector3 cartesian) {
+    double x = cartesian[0];
+    double y = cartesian[1];
+    double z = cartesian[2];
+    double r = sqrt(pow(x, 2) + pow(y, 2));
+    double theta = atan(y / x);
+    return CylRowVector3(z, r, theta);
+}
+
+std::unordered_set<CylRowVector2> Utils::reduceThetaDim(list<CylRowVector3> &cylindricalPointsList) {
+    std::unordered_set<CylRowVector2> reducedSet;
+    std::list<CylRowVector3>::iterator it;
+    for (it = cylindricalPointsList.begin(); it != cylindricalPointsList.end(); ++it) {
+        reducedSet.insert(Utils::reduceToCyl(*it));
+    }
+    return reducedSet;
+}
+
+CylRowVector2 Utils::reduceToCyl(CylRowVector3 &cyl) {
+    return CylRowVector2(cyl[0], cyl[1]);
 }
