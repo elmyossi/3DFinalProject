@@ -5,7 +5,7 @@
 #include <imgui/imgui_internal.h>
 #include <vector>
 #include <Eigen/Dense>
-#include "../src/rotationAxis/rotationAxis.h"
+#include "../src/rotationAxis/RotationAxis.h"
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace ImGuizmo {
@@ -142,12 +142,12 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 
 	// Expose an enumeration type
 	static int rotation_index = 0;
-	static float axisAngles[4][3] = {0};
-	static float axisPosition[4][3] = {0};
+	static float axisAngles[MAX_NUMBER_OF_AXIS][3] = {0};
+	static float axisPosition[MAX_NUMBER_OF_AXIS][3] = {0};
 	matrix_t& mat = *(matrix_t*)matrix;
 
 
-	ImGui::Combo("Axis index to set", (int *)(&rotation_index), "Axis 1\0Axis 2\0Axis 3\0Axis 4\0\0");
+	ImGui::Combo("Axis index to set", (int *)(&rotation_index), "Axis 1\0Axis 2\0Axis 3\0\0");
 
 	if (ImGui::Button("Capture axis", ImVec2(-1,0)))
 	{
@@ -169,8 +169,8 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 	ImGui::InputFloat3("Axis 2: center", axisPosition[1], 3);
 	ImGui::InputFloat3("Axis 3: direction", axisAngles[2], 3);
 	ImGui::InputFloat3("Axis 3: center", axisPosition[2], 3);
-	ImGui::InputFloat3("Axis 4: direction", axisAngles[3], 3);
-	ImGui::InputFloat3("Axis 4: center", axisPosition[3], 3);
+//	ImGui::InputFloat3("Axis 4: direction", axisAngles[3], 3);
+//	ImGui::InputFloat3("Axis 4: center", axisPosition[3], 3);
 
 	if (ImGui::Button("Done", ImVec2(-1,0)))
 	{
@@ -179,19 +179,19 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 		// if the distance from the core to one of the axis' center is bigger then the radius -> error
 		// 2. we will represent each axis using 1 single vector:
 		//			* its direction will be perpendicular to the vector connecting both centers.
-		bool allAxisAreValid = rotationAxis::validateAxisFromUser(axisPosition, 4);
+		bool allAxisAreValid = RotationAxis::validateAxisFromUser(axisPosition, MAX_NUMBER_OF_AXIS);
 		if (allAxisAreValid) {
-            std::cout << "OK :)))))"<< std::endl;
+            std::cout << "All axes are inside the sphere!"<< std::endl;
             bool puzzleIsBlocking = true;
-			puzzleIsBlocking = rotationAxis::handleAxisFromUser(axisAngles, axisPosition, 4);
+			puzzleIsBlocking = RotationAxis::handleAxisFromUser(axisAngles, axisPosition, MAX_NUMBER_OF_AXIS);
 			if (puzzleIsBlocking){
 				std::cout << "Puzzle is Blocking!"<< std::endl;
 			} else {
-				std::cout << "Puzzle is GOOD!"<< std::endl;
+				std::cout << "Puzzle is not Blocking!"<< std::endl;
 			}
         }
 		else {
-            std::cout << "Axis NOT VALID"<< std::endl;
+            std::cout << "At least one axis is outside the sphere"<< std::endl;
 		}
 
 	}
