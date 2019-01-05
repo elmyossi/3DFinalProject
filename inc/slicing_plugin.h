@@ -1,3 +1,6 @@
+#ifndef INC_3DFINALPROJECRT_SLICING_PLUGIN_H
+#define INC_3DFINALPROJECRT_SLICING_PLUGIN_H
+
 #include "../imguizmo/ImGuizmo.h"
 #include "menu_extra.h"
 #include <igl/opengl/glfw/imgui/ImGuiMenu.h>
@@ -77,3 +80,5 @@ class SlicingPlugin : public igl::opengl::glfw::imgui::ImGuiMenu {
 	}
 
 };
+
+#endif //INC_3DFINALPROJECRT_SLICING_PLUGIN_H
