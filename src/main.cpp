@@ -10,19 +10,14 @@
 #include <sstream>
 
 
-static const char *const innerPointsFilePath = "../points_bunny2.txt";
 static const char *const objFilePath = "../goodBunny.obj";
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    ifstream inFile(innerPointsFilePath);
-    long numberOfRows = std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
-
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;
-    Eigen::MatrixXd meshInnerPoints((numberOfRows), 3);
 
     // Load a mesh in OBJ format
     igl::readOBJ(objFilePath, V, F);
@@ -30,11 +25,9 @@ int main(int argc, char *argv[]) {
     // Attach a menu plugin
     igl::opengl::glfw::Viewer viewer;
 
-    Utils::fillMeshInnerPoints(meshInnerPoints, innerPointsFilePath);
-
     double radiusSize;
     // Compute the optimal core position of the Jaap's sphere
-    const RowVector3 &matrix = jaapSphere::calculateCenterOfSphere(V, meshInnerPoints, numberOfRows, radiusSize);
+    const RowVector3 &matrix = jaapSphere::calculateCenterOfSphere(V, radiusSize);
 
     RowVector3 cm = Utils::calculateCenterOfMassInside(V, F);
 
