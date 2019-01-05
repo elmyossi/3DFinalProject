@@ -12,8 +12,8 @@
 #include <iostream>
 #include <cmath>
 
-#define MAX_NUMBER_OF_AXIS 2
 #define POINTS_DISPLAY_SIZE 10;
+#define MAX_NUMBER_OF_AXIS 3
 
 using namespace std;
 const double EulerConstant = std::exp(1.0);
