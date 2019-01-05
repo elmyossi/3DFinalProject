@@ -6,6 +6,7 @@
 
 RowVector3 jaapSphere::jaapSphereCore = RowVector3(0,0,0);
 double jaapSphere::jaapSphereRadius = 0;
+static const char *const innerPointsFilePath = "../points_bunny2.txt";
 
 double jaapSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
     RowVector3 argMin = meshPointsS.row(0);
@@ -26,8 +27,13 @@ double jaapSphere::calcDistance(RowVector3 q, RowVector3 p) {
     return sqrt(pow((q[0] - p[0]), 2) + pow((q[1] - p[1]), 2) + pow((q[2] - p[2]), 2));
 }
 
-RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, Eigen::MatrixXd meshPointsInnerS,
-                                              long numberOfRowsInner,double& radiusSize) {
+RowVector3 jaapSphere::calculateCenterOfSphere(Eigen::MatrixXd meshPointsS, double& radiusSize) {
+
+    ifstream inFile(innerPointsFilePath);
+    long numberOfRowsInner = std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
+    Eigen::MatrixXd meshPointsInnerS((numberOfRowsInner), 3);
+    Utils::fillMeshInnerPoints(meshPointsInnerS, innerPointsFilePath);
+
     RowVector3 argMax = meshPointsInnerS.row(0);
     double maxVal = getMinOutOfMesh(meshPointsS, argMax);
     double temp;
