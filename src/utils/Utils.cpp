@@ -70,10 +70,10 @@ void Utils::displayGUI(igl::opengl::glfw::Viewer viewer, Eigen::MatrixXd V, Eige
                        RowVector3 cm) {
     viewer.data().set_mesh(V, F);
     viewer.data().point_size = POINTS_DISPLAY_SIZE;
-    viewer.data().add_points(core, RowVector3(0, 0, 0));
-    viewer.data().add_points(cm, RowVector3(0, 0, 0));
-    viewer.data().add_label(core, "THIS IS THE CORE");
-    viewer.data().add_label(cm, "THIS IS THE Center Mass");
+    viewer.data().add_points(core, RowVector3(255, 0, 0));
+    viewer.data().add_points(cm, RowVector3(0, 255, 0));
+    viewer.data().add_label(core, "Jaap Sphere Core");
+    viewer.data().add_label(cm, "Center Mass");
     double jaapSphereRadius = jaapSphere::jaapSphereRadius;
     cout << "This is the radius:" << jaapSphereRadius << endl;
 

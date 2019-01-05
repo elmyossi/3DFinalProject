@@ -6,7 +6,7 @@
 
 RowVector3 jaapSphere::jaapSphereCore = RowVector3(0,0,0);
 double jaapSphere::jaapSphereRadius = 0;
-static const char *const innerPointsFilePath = "../points_bunny2.txt";
+static const char *const innerPointsFilePath = "../pre_processing/points.txt";
 
 double jaapSphere::getMinOutOfMesh(Eigen::MatrixXd meshPointsS, RowVector3 p) {
     RowVector3 argMin = meshPointsS.row(0);
