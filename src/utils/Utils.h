@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cmath>
 
-#define MAX_NUMBER_OF_AXIS 2
+#define MAX_NUMBER_OF_AXIS 3
 
 const double EulerConstant = std::exp(1.0);
 typedef Eigen::Matrix<double, 1, 3> RowVector3;

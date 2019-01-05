@@ -5,6 +5,7 @@
 *.slo
 *.lo
 *.o
+.idea
 
 # Precompiled Headers
 *.gch

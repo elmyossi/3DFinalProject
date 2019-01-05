@@ -93,12 +93,6 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 	static bool useSnap = false;
 	static float snap[3] = { 1.f, 1.f, 1.f };
 
-	// if (ImGui::IsKeyPressed(90))
-	// 	mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-	// if (ImGui::IsKeyPressed(69))
-	// 	mCurrentGizmoOperation = ImGuizmo::ROTATE;
-	// if (ImGui::IsKeyPressed(82)) // r Key
-	// 	mCurrentGizmoOperation = ImGuizmo::SCALE;
 	if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 	ImGui::SameLine();
@@ -122,23 +116,6 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 		if (ImGui::RadioButton("World", mCurrentGizmoMode == ImGuizmo::WORLD))
 			mCurrentGizmoMode = ImGuizmo::WORLD;
 	}
-	// if (ImGui::IsKeyPressed(83))
-	// 	useSnap = !useSnap;
-	// ImGui::Checkbox("##Snap", &useSnap);
-	// ImGui::SameLine();
-
-	// switch (mCurrentGizmoOperation)
-	// {
-	// case ImGuizmo::TRANSLATE:
-	// 	ImGui::InputFloat3("Snap", &snap[0]);
-	// 	break;
-	// case ImGuizmo::ROTATE:
-	// 	ImGui::InputFloat("Angle Snap", &snap[0]);
-	// 	break;
-	// case ImGuizmo::SCALE:
-	// 	ImGui::InputFloat("Scale Snap", &snap[0]);
-	// 	break;
-	// }
 
 	// Expose an enumeration type
 	static int rotation_index = 0;
@@ -162,15 +139,17 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 		axisPosition[rotation_index][2] = centerZ;
 	}
 	//static std::vector<std::string> axis;
-	// each axis is 2d vector: axis[0] vector defines the direction, axis[1] defines the center
-	ImGui::InputFloat3("Axis 1: direction", axisAngles[0], 3);
-	ImGui::InputFloat3("Axis 1: center", axisPosition[0], 3);
-	ImGui::InputFloat3("Axis 2: direction", axisAngles[1], 3);
-	ImGui::InputFloat3("Axis 2: center", axisPosition[1], 3);
-	ImGui::InputFloat3("Axis 3: direction", axisAngles[2], 3);
-	ImGui::InputFloat3("Axis 3: center", axisPosition[2], 3);
-//	ImGui::InputFloat3("Axis 4: direction", axisAngles[3], 3);
-//	ImGui::InputFloat3("Axis 4: center", axisPosition[3], 3);
+	// each axis has 2 arrays: axisAngles defines the direction of the normal to the plane,
+	// 						   axisPosition defines the center of the plane
+	for (int i =0; i< MAX_NUMBER_OF_AXIS; i++)
+	{
+		std::stringstream ss1,ss2;
+		ss1 << "Axis" << i << " : direction";
+		ss2 << "Axis" << i << " : center";
+		std::string s = ss1.str();
+		ImGui::InputFloat3(ss1.str().c_str(), axisAngles[i], 3);
+		ImGui::InputFloat3(ss2.str().c_str(), axisPosition[i], 3);
+	}
 
 	if (ImGui::Button("Done", ImVec2(-1,0)))
 	{
