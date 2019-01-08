@@ -8,13 +8,26 @@
 #include "JaapSphere/jaapSphere.h"
 #include <fstream>
 #include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 
-static const char *const objFilePath = "../goodBunny.obj";
+static const char *const objFilePath = "../pre_processing/bunny.obj";
 
 using namespace std;
 
+void perform_pre_processing(){
+    // the pre - processing stage is computational heavy, but need to be performed only once.
+    // it performs:
+    // 1. convert a given .stl file to obj
+    // 2. calculates winding numbers on the .stl file
+    system("../pre_processing/pre_proc.sh bunny");     //should be chmod +x
+}
+
 int main(int argc, char *argv[]) {
+
+    // the program expects an .stl file to be located in the pre_processing folder
+    perform_pre_processing();
 
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;

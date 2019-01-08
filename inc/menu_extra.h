@@ -148,8 +148,8 @@ void EditTransform(const float *cameraView, float *cameraProjection, float* matr
 	for (int i =0; i< MAX_NUMBER_OF_AXIS; i++)
 	{
 		std::stringstream ss1,ss2;
-		ss1 << "Axis" << i << " : direction";
-		ss2 << "Axis" << i << " : center";
+		ss1 << "Axis" << i+1 << " : direction";
+		ss2 << "Axis" << i+1 << " : center";
 		std::string s = ss1.str();
 		ImGui::InputFloat3(ss1.str().c_str(), axisAngles[i], 3);
 		ImGui::InputFloat3(ss2.str().c_str(), axisPosition[i], 3);
